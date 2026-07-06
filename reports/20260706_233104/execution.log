@@ -1,0 +1,33 @@
+2026-07-06 23:31:04 | INFO     | ecommerce_framework | Report directory initialized: D:\ecommerce_selenium_pytest_framework\reports\20260706_233104
+2026-07-06 23:31:04 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_add_product_in_inventory_page
+2026-07-06 23:31:05 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:06 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_add_product_in_inventory_page | duration=0.143s
+2026-07-06 23:31:09 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:09 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_add_product_in_inventory_page
+2026-07-06 23:31:09 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_remove_btn_functionality
+2026-07-06 23:31:10 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:21 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_remove_btn_functionality | duration=10.392s
+2026-07-06 23:31:23 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:23 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_remove_btn_functionality
+2026-07-06 23:31:23 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_correct_product_details
+2026-07-06 23:31:24 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:25 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_correct_product_details | duration=0.139s
+2026-07-06 23:31:27 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:27 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_correct_product_details
+2026-07-06 23:31:27 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_sort_products_by_price_low_to_high
+2026-07-06 23:31:28 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:29 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_sort_products_by_price_low_to_high | duration=0.145s
+2026-07-06 23:31:31 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:31 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_sort_products_by_price_low_to_high
+2026-07-06 23:31:31 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_open_product_detail_from_inventory
+2026-07-06 23:31:32 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:33 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_open_product_detail_from_inventory | duration=0.091s
+2026-07-06 23:31:35 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:35 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_open_product_detail_from_inventory
+2026-07-06 23:31:35 | INFO     | ecommerce_framework | START | tests/test_inventory_page.py::TestInventoryPage::test_footer_social_links_are_available
+2026-07-06 23:31:36 | INFO     | ecommerce_framework | WebDriver started | browser=chrome | headless=False
+2026-07-06 23:31:37 | INFO     | ecommerce_framework | PASSED | tests/test_inventory_page.py::TestInventoryPage::test_footer_social_links_are_available | duration=0.077s
+2026-07-06 23:31:39 | INFO     | ecommerce_framework | WebDriver closed | browser=chrome
+2026-07-06 23:31:39 | INFO     | ecommerce_framework | END   | tests/test_inventory_page.py::TestInventoryPage::test_footer_social_links_are_available
+2026-07-06 23:31:39 | INFO     | ecommerce_framework | Suite finished with exit status 0
+2026-07-06 23:31:39 | INFO     | ecommerce_framework | Summary written to D:\ecommerce_selenium_pytest_framework\reports\20260706_233104\summary.json

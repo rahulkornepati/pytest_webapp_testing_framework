@@ -1,0 +1,89 @@
+{
+  "run_id": "20260706_233104",
+  "started_at": "2026-07-06T23:31:04+05:30",
+  "finished_at": "2026-07-06T23:31:39+05:30",
+  "total_duration_seconds": 34.932,
+  "total_tests": 6,
+  "counts": {
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0
+  },
+  "environment": {
+    "execution_timestamp": "2026-07-06T23:31:04+05:30",
+    "os": "Windows-11-10.0.26200-SP0",
+    "python_version": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+    "run_id": "20260706_233104",
+    "browser": "chrome",
+    "base_url": "https://www.saucedemo.com/",
+    "headless": "False",
+    "implicit_wait": "0",
+    "browser_version": "149.0.7827.201",
+    "browser_platform": "windows",
+    "pytest_exit_status": "0"
+  },
+  "artifacts": {
+    "report_html": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\report.html",
+    "execution_log": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\execution.log",
+    "screenshots": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\screenshots",
+    "environment_properties": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\environment.properties",
+    "failed_tests": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\failed_tests.txt",
+    "junit_xml": "D:\\ecommerce_selenium_pytest_framework\\reports\\20260706_233104\\junit.xml"
+  },
+  "tests": [
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_add_product_in_inventory_page",
+      "outcome": "passed",
+      "duration_seconds": 0.143,
+      "start_time": "2026-07-06T23:31:06+05:30",
+      "end_time": "2026-07-06T23:31:06+05:30",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_remove_btn_functionality",
+      "outcome": "passed",
+      "duration_seconds": 10.392,
+      "start_time": "2026-07-06T23:31:10+05:30",
+      "end_time": "2026-07-06T23:31:21+05:30",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_correct_product_details",
+      "outcome": "passed",
+      "duration_seconds": 0.139,
+      "start_time": "2026-07-06T23:31:25+05:30",
+      "end_time": "2026-07-06T23:31:25+05:30",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_sort_products_by_price_low_to_high",
+      "outcome": "passed",
+      "duration_seconds": 0.145,
+      "start_time": "2026-07-06T23:31:29+05:30",
+      "end_time": "2026-07-06T23:31:29+05:30",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_open_product_detail_from_inventory",
+      "outcome": "passed",
+      "duration_seconds": 0.091,
+      "start_time": "2026-07-06T23:31:33+05:30",
+      "end_time": "2026-07-06T23:31:33+05:30",
+      "screenshot": null,
+      "error": null
+    },
+    {
+      "nodeid": "tests/test_inventory_page.py::TestInventoryPage::test_footer_social_links_are_available",
+      "outcome": "passed",
+      "duration_seconds": 0.077,
+      "start_time": "2026-07-06T23:31:37+05:30",
+      "end_time": "2026-07-06T23:31:37+05:30",
+      "screenshot": null,
+      "error": null
+    }
+  ]
+}
