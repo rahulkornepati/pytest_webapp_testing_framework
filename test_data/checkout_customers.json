@@ -1,0 +1,12 @@
+{
+  "valid_customer": {
+    "first_name": "Rahul",
+    "last_name": "QA",
+    "postal_code": "560001"
+  },
+  "missing_first_name": {
+    "first_name": "",
+    "last_name": "QA",
+    "postal_code": "560001"
+  }
+}

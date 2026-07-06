@@ -1,0 +1,7 @@
+pytest==8.4.1
+selenium==4.33.0
+webdriver-manager==4.0.2
+pytest-html==4.1.1
+pytest-xdist==3.8.0
+allure-pytest==2.14.3
+python-dotenv==1.1.0
