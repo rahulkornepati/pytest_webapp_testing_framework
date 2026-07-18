@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User",
+  "description": "Schema for a user resource",
+  "type": "object",
+  "required": ["id", "email", "name", "role", "avatar"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "password": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "enum": ["customer", "admin"]
+    },
+    "avatar": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

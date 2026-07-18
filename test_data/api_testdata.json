@@ -1,0 +1,18 @@
+{
+  "existing_user_id": 1,
+  "existing_product_id": 2,
+  "existing_category_id": 1,
+  "non_existent_product_id": 999999,
+  "non_existent_user_id": 999999,
+  "non_existent_cart_id": 999999,
+  "non_existent_order_id": 999999,
+  "valid_product_ids": [2, 4, 5, 6, 7],
+  "valid_category_ids": [1, 2, 3, 4, 5],
+  "invalid_endpoint": "/nonexistent/endpoint/12345",
+  "search_keyword": "Classic",
+  "min_products_expected": 5,
+  "max_acceptable_response_time_seconds": 2.0,
+  "product_title_contains": "Classic",
+  "admin_email": "admin@mail.com",
+  "admin_password": "admin123"
+}

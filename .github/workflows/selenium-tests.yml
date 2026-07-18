@@ -1,0 +1,105 @@
+name: E2E & API Tests
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: Browser to run
+        default: chrome
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
+      markers:
+        description: Pytest marker expression
+        default: smoke
+        required: false
+      test_suite:
+        description: Test suite to run
+        default: all
+        type: choice
+        options:
+          - all
+          - ui
+          - api
+
+jobs:
+  selenium-tests:
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'ui' || github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    env:
+      PYTEST_REPORT_RUN_ID: gha-ui-${{ github.run_id }}-${{ github.run_attempt }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Selenium tests
+        run: |
+          MARKERS="${{ github.event.inputs.markers || 'smoke' }}"
+          BROWSER="${{ github.event.inputs.browser || 'chrome' }}"
+          python run_tests.py --browser "$BROWSER" --markers "$MARKERS" --headless
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-pytest-reports-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/**
+          if-no-files-found: warn
+
+  api-tests:
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'api' || github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    env:
+      PYTEST_REPORT_RUN_ID: gha-api-${{ github.run_id }}-${{ github.run_attempt }}
+      API_BASE_URL: https://api.escuelajs.co/api/v1
+      API_USERNAME: john@mail.com
+      API_PASSWORD: changeme
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run API tests
+        run: |
+          python -m pytest api_tests/ \
+            --html=reports/api_report.html --self-contained-html \
+            --junitxml=reports/api_junit.xml \
+            -m "api" \
+            -n auto \
+            --report-run-id "${{ env.PYTEST_REPORT_RUN_ID }}"
+
+      - name: Upload API test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-pytest-reports-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/**
+          if-no-files-found: warn

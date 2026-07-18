@@ -1,0 +1,75 @@
+{
+  "login_valid": {
+    "email": "john@mail.com",
+    "password": "changeme"
+  },
+  "login_invalid": {
+    "email": "invalid@mail.com",
+    "password": "wrong_password"
+  },
+  "login_missing_fields": {
+    "email": "",
+    "password": ""
+  },
+  "register_user": {
+    "name": "Test User",
+    "email": "testuser_{{random}}@mail.com",
+    "password": "TestPass123!",
+    "avatar": "https://api.lorem.space/image/face?w=640&h=480"
+  },
+  "create_product": {
+    "title": "Test Product",
+    "price": 99.99,
+    "description": "A test product created by automated API tests",
+    "categoryId": 1,
+    "images": [
+      "https://api.lorem.space/image/product?w=640&h=480&r=1"
+    ]
+  },
+  "update_product": {
+    "title": "Updated Product Title",
+    "price": 49.99
+  },
+  "create_cart": {
+    "userId": 1,
+    "date": "2025-01-01",
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 2
+      }
+    ]
+  },
+  "update_cart_item": {
+    "userId": 1,
+    "date": "2025-01-01",
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 5
+      }
+    ]
+  },
+  "create_order": {
+    "userId": 1,
+    "date": "2025-01-01",
+    "products": [
+      {
+        "productId": 2,
+        "quantity": 2
+      },
+      {
+        "productId": 4,
+        "quantity": 1
+      }
+    ]
+  },
+  "update_user_profile": {
+    "name": "Updated User Name",
+    "email": "john@mail.com",
+    "password": "changeme"
+  },
+  "invalid_payload": {
+    "invalid_field": "should not work"
+  }
+}

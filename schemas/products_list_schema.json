@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProductsList",
+  "description": "Schema for a list of products",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "title", "price", "description", "category", "images"],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "price": {
+        "type": "number",
+        "minimum": 0
+      },
+      "description": {
+        "type": "string"
+      },
+      "category": {
+        "type": "object",
+        "required": ["id", "name", "image"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "images": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 0
+      }
+    },
+    "additionalProperties": true
+  }
+}

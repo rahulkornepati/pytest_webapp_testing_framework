@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuthLoginResponse",
+  "description": "Schema for the login response",
+  "type": "object",
+  "required": ["access_token", "refresh_token"],
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "minLength": 1
+    },
+    "refresh_token": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "additionalProperties": true
+}
