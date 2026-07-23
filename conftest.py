@@ -14,6 +14,7 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from utils.config_reader import read_json
+
 from utils.report_manager import LOGGER_NAME, ReportManager, TestResult
 
 

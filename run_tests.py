@@ -10,7 +10,7 @@ import pytest
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Pytest runner for the ecommerce framework (UI + API)."
+        description="Pytest runner for the ecommerce framework (UI + API + DB)."
     )
     # ── UI / Selenium options ────────────────────────────────────────────────
     parser.add_argument("--browser", default="chrome", choices=["chrome", "firefox", "edge"])
@@ -20,7 +20,7 @@ def _parse_args() -> argparse.Namespace:
     # ── API options ──────────────────────────────────────────────────────────
     parser.add_argument(
         "--suite",
-        choices=["ui", "api", "all"],
+        choices=["ui", "api", "db", "all"],
         default="ui",
         help="Which test suite to run (default: ui)",
     )
@@ -28,6 +28,14 @@ def _parse_args() -> argparse.Namespace:
         "--api-base-url",
         default=os.getenv("API_BASE_URL", "https://api.escuelajs.co/api/v1"),
         help="Base URL for API tests",
+    )
+
+    # ── Database options ─────────────────────────────────────────────────────
+    parser.add_argument(
+        "--db-reset",
+        action="store_true",
+        default=False,
+        help="Reset the database before running database tests",
     )
 
     # ── Common options ───────────────────────────────────────────────────────
@@ -82,19 +90,56 @@ def build_api_args(args: argparse.Namespace) -> list[str]:
     return pytest_args
 
 
+def build_db_args(args: argparse.Namespace) -> list[str]:
+    """Build pytest arguments for database tests."""
+    pytest_args = [
+        "database/",
+        f"--report-run-id={args.report_run_id}",
+    ]
+    if args.markers:
+        marker_expr = args.markers
+        if "database" not in marker_expr:
+            marker_expr = f"database and ({marker_expr})"
+        pytest_args.extend(["-m", marker_expr])
+    else:
+        pytest_args.extend(["-m", "database"])
+    if args.workers != "1":
+        pytest_args.extend(["-n", args.workers])
+    return pytest_args
+
+
 def main() -> int:
     args = _parse_args()
+
+    # Reset database if requested
+    if args.db_reset or args.suite == "db":
+        try:
+            from database.db_setup import create_database
+            from database.db_config import DBConfig
+
+            db_path = DBConfig.DATABASE_PATH
+            if not db_path.exists() or args.db_reset:
+                print(f"[DB] Setting up database at: {db_path}")
+                create_database()
+        except ImportError:
+            print("[DB] Warning: database module not available, skipping setup")
+        except Exception as exc:
+            print(f"[DB] Warning: database setup failed: {exc}")
+
     suite = args.suite
 
     if suite == "ui":
         return pytest.main(build_ui_args(args))
     if suite == "api":
         return pytest.main(build_api_args(args))
+    if suite == "db":
+        return pytest.main(build_db_args(args))
 
-    # suite == "all" — run UI first, then API
+    # suite == "all" — run UI, API, then DB
     ui_exit = pytest.main(build_ui_args(args))
     api_exit = pytest.main(build_api_args(args))
-    return max(ui_exit, api_exit)
+    db_exit = pytest.main(build_db_args(args))
+    return max(ui_exit, api_exit, db_exit)
 
 
 if __name__ == "__main__":

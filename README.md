@@ -1,11 +1,12 @@
 # 🛒 Selenium + PyTest Enterprise Automation Framework
 
-> **A production-grade, dual-layer automation framework combining Selenium WebDriver UI tests with Python Requests API tests — built for maintainability, scalability, and CI/CD readiness.**
+> **A production-grade, triple-layer automation framework combining Selenium WebDriver UI tests, Python Requests API tests, and SQLite database validation — built for maintainability, scalability, and CI/CD readiness.**
 
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white)](https://python.org)
 [![Pytest](https://img.shields.io/badge/Pytest-8.4-0A9EDC?logo=pytest&logoColor=white)](https://pytest.org)
 [![Selenium](https://img.shields.io/badge/Selenium-4.33-43B02A?logo=selenium&logoColor=white)](https://selenium.dev)
 [![Requests](https://img.shields.io/badge/Requests-2.32-FF6F00?logo=python&logoColor=white)](https://requests.readthedocs.io)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)](https://sqlite.org)
 [![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)](.github/workflows/selenium-tests.yml)
 [![Jenkins](https://img.shields.io/badge/CI-Jenkins-D24939?logo=jenkins&logoColor=white)](Jenkinsfile)
 [![API Tests](https://img.shields.io/badge/API-30_Tests-512BD4?logo=postman&logoColor=white)](api_tests/)
@@ -20,16 +21,17 @@
 
 ## 📋 Project Overview
 
-This framework provides **end-to-end quality assurance** for an ecommerce web application (SauceDemo) through a **dual automation strategy**:
+This framework provides **end-to-end quality assurance** for an ecommerce web application (SauceDemo) through a **triple automation strategy**:
 
 | Layer | Technology | Scope |
 |-------|-----------|-------|
 | **🧪 UI Tests** | Selenium WebDriver + PyTest | Browser-based user journeys (login, inventory, cart, checkout) |
 | **🔌 API Tests** | Python Requests + PyTest | Backend service validation (auth, products, cart, orders, users, schema, performance) |
+| **🗄️ DB Tests** | SQLite + PyTest | Database-level data integrity, constraints, and business rule validation |
 
 ### 🎯 Problem Solved
 
-Modern web applications demand validation at **every layer of the stack**. Traditional UI-only automation is slow, brittle, and cannot cover backend logic. API-only automation misses critical browser rendering and user-experience bugs. **This framework bridges both worlds** with a shared configuration, reporting, and CI/CD foundation — giving teams comprehensive coverage without duplicated effort.
+Modern web applications demand validation at **every layer of the stack**. Traditional UI-only automation is slow, brittle, and cannot cover backend logic. API-only automation misses critical browser rendering and user-experience bugs. **This framework bridges all three layers** (UI, API, and Database) with a shared configuration, reporting, and CI/CD foundation — giving teams comprehensive coverage without duplicated effort.
 
 ### 🏆 Framework Goals
 
@@ -80,6 +82,8 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 - **API Client** with automatic retry, session management, and pluggable authentication
 - **Data Models** mapping API responses to typed Python dataclasses (`Product`, `User`, `Cart`, `Order`)
 - **JSON Schema Validation** for every API response against 7 formal schemas
+- **Database Validation Engine** with 15 SQLite tables, 150+ sample records, and 245 tests across 15 business modules
+- **Centralized SQL Queries** stored as enum constants — no raw SQL in test methods
 - **Timestamped reports** with HTML, JUnit XML, execution logs, environment properties, and failure screenshots
 </details>
 
@@ -188,6 +192,33 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 │   ├── config_reader.py         <em>#   ↳ JSON test data loader</em>
 │   └── report_manager.py        <em>#   ↳ Reporting engine: results, summary, environment, logging</em>
 │
+├── 📂 <strong>database/</strong>                <em># 🗄️ Database validation engine</em>
+│   ├── __init__.py              <em>#   ↳ Package exports (DBConfig, DatabaseConnection, etc.)</em>
+│   ├── db_config.py             <em>#   ↳ Database path, timeout, retries, WAL mode settings</em>
+│   ├── db_connection.py         <em>#   ↳ Singleton connection manager with context managers</em>
+│   ├── db_queries.py            <em>#   ↳ Reusable query execution (fetch_scalar, fetch_all, etc.)</em>
+│   ├── db_helpers.py            <em>#   ↳ 50+ reusable assertion/validation methods</em>
+│   ├── database_utils.py        <em>#   ↳ Utility functions (search, sort, coupon validation)</em>
+│   ├── sql_constants.py         <em>#   ↳ ALL SQL queries as enum members</em>
+│   ├── db_setup.py              <em>#   ↳ Schema creation + 15 tables with sample data</em>
+│   ├── conftest.py              <em>#   ↳ DB test fixtures (helpers, utils, known data refs)</em>
+│   ├── test_login_db.py         <em>#   ↳ 14 tests: user accounts, login validation</em>
+│   ├── test_products_db.py      <em>#   ↳ 14 tests: product catalog, pricing, images</em>
+│   ├── test_inventory_db.py     <em>#   ↳ 14 tests: stock levels, reorder points</em>
+│   ├── test_cart_db.py          <em>#   ↳ 14 tests: cart items, quantities, totals</em>
+│   ├── test_checkout_db.py      <em>#   ↳ 14 tests: checkout flow, cart-to-order conversion</em>
+│   ├── test_orders_db.py        <em>#   ↳ 14 tests: order lifecycle, statuses, totals</em>
+│   ├── test_order_items_db.py   <em>#   ↳ 14 tests: line items, pricing, product linkage</em>
+│   ├── test_users_db.py         <em>#   ↳ 14 tests: user profiles, roles, account status</em>
+│   ├── test_payments_db.py      <em>#   ↳ 14 tests: payment records, amounts, revenue</em>
+│   ├── test_search_db.py        <em>#   ↳ 14 tests: product search, filtering</em>
+│   ├── test_sorting_db.py       <em>#   ↳ 14 tests: sort by name, price, stability</em>
+│   ├── test_sessions_db.py      <em>#   ↳ 14 tests: user sessions, tokens, expiry</em>
+│   ├── test_coupons_db.py       <em>#   ↳ 14 tests: coupon codes, discounts, validity</em>
+│   ├── test_reviews_db.py       <em>#   ↳ 14 tests: reviews, ratings, moderation</em>
+│   ├── test_wishlist_db.py      <em>#   ↳ 14 tests: wishlist items, user-product pairs</em>
+│   └── README.md                <em>#   ↳ DB module documentation</em>
+│
 ├── 📂 <strong>config/</strong>                  <em># ⚙️ Configuration</em>
 │   └── api_config.py            <em>#   ↳ API settings from .env (timeout, retries, pagination)</em>
 │
@@ -209,7 +240,7 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 │
 ├── conftest.py                  <em># 🧩 Root pytest config: fixtures, hooks, browser setup</em>
 ├── pytest.ini                   <em># 📋 Pytest markers, test discovery, default addopts</em>
-├── run_tests.py                 <em># 🚀 Unified test runner (UI / API / both)</em>
+├── run_tests.py                 <em># 🚀 Unified test runner (UI / API / DB / all)</em>
 ├── requirements.txt             <em># 📦 Python dependencies</em>
 ├── .env.example                 <em># 🔐 Environment variable template</em>
 ├── Jenkinsfile                  <em># 🔄 Jenkins declarative pipeline</em>
@@ -225,21 +256,21 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 ```
   User / CI Trigger
          ↓
-  ┌─ run_tests.py / pytest ─┐
-  │         ↓                │
-  │   conftest.py Fixtures  │
-  │    ↕       ↕             │
-  │  UI Path   API Path      │
-  │    ↓        ↓            │
-  │  Page Obj  APIClient    │
-  │    ↓        ↓            │
-  │  Assert    Assert        │
-  │    ↓        ↓            │
-  │  └── ReportManager ──┘  │
-  │         ↓                │
-  │  HTML | JUnit | Logs    │
-  │  Summary | Screenshots   │
-  └─────────────────────────┘
+  ┌──── run_tests.py / pytest ────┐
+  │            ↓                   │
+  │      conftest.py Fixtures     │
+  │    ↕         ↕         ↕      │
+  │  UI Path  API Path   DB Path   │
+  │    ↓         ↓         ↓      │
+  │  Page Obj APIClient  DBHelpers │
+  │    ↓         ↓         ↓      │
+  │  Assert    Assert    Assert   │
+  │    ↓         ↓         ↓      │
+  │    └── ReportManager ──┘      │
+  │            ↓                   │
+  │  HTML | JUnit | Logs | JSON   │
+  │  Summary | Screenshots        │
+  └───────────────────────────────┘
 ```
 
 **Execution pipeline:**
@@ -248,9 +279,10 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 2. `conftest.py` loads environment (`.env`) and sets up fixtures
 3. **UI path**: WebDriver initializes → Page Objects interact with the browser → assertions validate behavior
 4. **API path**: `APIClient` authenticates → HTTP requests execute → `APIAssertions` validate responses
-5. `ReportManager` collects results, screenshots, and timings from both paths
-6. Final artifacts published (HTML, JUnit, logs, summary)
-7. CI systems archive and publish reports for team visibility
+5. **DB path**: `DatabaseConnection` connects to SQLite → `DBHelpers` execute queries → assertions validate data integrity
+6. `ReportManager` collects results, screenshots, and timings from all three paths
+7. Final artifacts published (HTML, JUnit, logs, summary)
+8. CI systems archive and publish reports for team visibility
 
 ---
 
@@ -269,6 +301,7 @@ Modern web applications demand validation at **every layer of the stack**. Tradi
 | [pytest-html](https://github.com/pytest-dev/pytest-html) | 4.1 | Self-contained HTML report |
 | [pytest-xdist](https://github.com/pytest-dev/pytest-xdist) | 3.8 | Parallel test execution |
 | [allure-pytest](https://docs.qameta.io/allure-report/) | 2.14 | Allure reporting integration |
+| [SQLite](https://sqlite.org) | 3.x | Self-contained database engine (no server required) |
 | [GitHub Actions](https://github.com/features/actions) | — | CI/CD automation |
 | [Jenkins](https://jenkins.io) | — | Enterprise CI/CD pipeline |
 
@@ -356,6 +389,11 @@ def test_login(api_client: APIClient, api_helpers: APIHelpers): ...
 | Placeholder Substitution | ✅ | `{{random}}` → unique IDs |
 | Smart Test Skipping | ✅ | Graceful skip on unavailable endpoints |
 | Performance Tests | ✅ | Response time < 2s validation |
+| Database Validation | ✅ | SQLite DB with 15 tables, 245 tests |
+| Centralized SQL Queries | ✅ | All SQL in enum constants, zero SQL in tests |
+| Reusable DB Helpers | ✅ | 50+ static validation methods |
+| Auto-Seeded Database | ✅ | Schema + sample data created on first run |
+| DB Connection Manager | ✅ | Singleton + context manager + retry logic |
 
 ---
 
@@ -434,6 +472,82 @@ class Product:
 
 ---
 
+## 🗄️ Database Automation
+
+The database layer adds **direct SQLite validation** as a third testing dimension, complementing UI and API tests. It uses a **self-contained SQLite database** (no external server) with 15 tables modeling a complete e-commerce platform.
+
+### Architecture
+
+```
+DBHelpers / DatabaseUtils  (static assertion methods)
+        ↓
+    db_queries.py   (fetch_scalar, fetch_one, fetch_all, count, exists)
+        ↓
+  db_connection.py  (singleton + context manager + retry logic)
+        ↓
+   SQLite Database  (15 tables, 150+ sample records)
+```
+
+### Database Schema (15 tables)
+
+| Table | Purpose | Sample Records |
+|-------|---------|---------------|
+| `categories` | Product categories | 10 |
+| `products` | Product catalog with pricing | 24 |
+| `users` | User accounts with roles & status | 10 |
+| `inventory` | Stock levels and reorder thresholds | 24 |
+| `cart` | Shopping cart headers | 4 |
+| `cart_items` | Cart line items | 7 |
+| `orders` | Order headers with lifecycle | 6 |
+| `order_items` | Order line items | 12 |
+| `payments` | Payment transactions | 6 |
+| `coupons` | Discount codes | 8 |
+| `user_sessions` | Login session tracking | 5 |
+| `wishlist` | User wishlists | 8 |
+| `shipping` | Order shipping info | 5 |
+| `reviews` | Product reviews and ratings | 10 |
+| `audit_logs` | Change tracking | 13 |
+
+### Key Design Decisions
+
+- **No SQL in tests** — all queries live in `sql_constants.py` as enum members
+- **Reusable helpers** — `DBHelpers` provides 50+ static methods for common validations
+- **Clean assertions** — tests call `db_helpers.product_price("Backpack")` not `cursor.execute(...)`
+- **Smart fixtures** — `known_products`, `known_users`, `db_helpers` inject into tests
+- **Auto-setup** — database is created and seeded on first test run (no manual steps)
+
+### Database Test Coverage (245 tests)
+
+| Module | File | Tests | Key Validations |
+|--------|------|-------|-----------------|
+| Login | `test_login_db.py` | 14 | User existence, roles, account lock, login attempts |
+| Products | `test_products_db.py` | 14 | Pricing, descriptions, category mapping, images |
+| Inventory | `test_inventory_db.py` | 14 | Stock levels, reorder points, warehouse locations |
+| Cart | `test_cart_db.py` | 14 | Items, quantities, totals, cart lifecycle |
+| Checkout | `test_checkout_db.py` | 14 | Cart-to-order conversion, payment linkage |
+| Orders | `test_orders_db.py` | 14 | Status transitions, totals, timestamps |
+| Order Items | `test_order_items_db.py` | 14 | Line items, pricing, product references |
+| Users | `test_users_db.py` | 14 | Profiles, roles, email validation, passwords |
+| Payments | `test_payments_db.py` | 14 | Amounts, statuses, revenue aggregation |
+| Search | `test_search_db.py` | 14 | Name/description/category/price-range search |
+| Sorting | `test_sorting_db.py` | 14 | Sort by name, price, stability of ties |
+| Sessions | `test_sessions_db.py` | 14 | Tokens, expiry, activity tracking |
+| Coupons | `test_coupons_db.py` | 14 | Discounts, usage limits, validity checks |
+| Reviews | `test_reviews_db.py` | 14 | Ratings, moderation workflow, duplicates |
+| Wishlist | `test_wishlist_db.py` | 14 | Items, user-product pairs, timestamps |
+
+### Design Principles
+
+| Principle | Implementation |
+|-----------|---------------|
+| **DRY** | All SQL in `sql_constants.py` — zero duplication across 15 test files |
+| **Single Responsibility** | Each file has one purpose: connection, queries, helpers, or tests |
+| **Dependency Injection** | Fixtures inject `db_helpers`, `db_utils`, `known_products` into tests |
+| **Configurability** | Database path, timeout, WAL mode all in `db_config.py` |
+| **Self-Contained** | SQLite requires zero external infrastructure |
+
+---
+
 ## 📊 Test Data Management
 
 ### JSON Files
@@ -497,6 +611,10 @@ Python's `logging` module with dual-handler setup (file + console):
 | `ecommerce_framework.api.auth` | Authentication operations |
 | `ecommerce_framework.api.assertions` | Schema validation |
 | `ecommerce_framework.api.conftest` | API fixture setup |
+| `ecommerce_framework.database.connection` | Database connection lifecycle |
+| `ecommerce_framework.database.queries` | Query execution logging |
+| `ecommerce_framework.database.helpers` | Database assertion helpers |
+| `ecommerce_framework.database.setup` | Database creation and seeding |
 
 **Logged events:** Test lifecycle (`START`/`END`/`PASSED`/`FAILED`), API requests/responses (with timing), screenshots, authentication, and errors.
 
@@ -537,12 +655,19 @@ cp .env.example .env            # Edit with your credentials
 
 | Command | Description |
 |---------|-------------|
-| `pytest` | Run all tests (UI + API) |
+| `pytest` | Run all tests (UI + API + DB) |
 | `pytest tests/` | UI tests only |
 | `pytest api_tests/ -m api` | API tests only |
-| `python run_tests.py --suite=all` | Both suites via runner |
+| `pytest database/` | Database tests only (245 tests) |
+| `pytest -m database` | Database tests via marker |
+| `pytest database/test_products_db.py` | Single DB module |
+| `python run_tests.py --suite=all` | All three suites via runner |
+| `python run_tests.py --suite=db` | DB suite only via runner |
+| `python run_tests.py --suite=db --db-reset` | DB tests with fresh database |
 | `python run_tests.py --suite=api` | API only via runner |
+| `python -m database.db_setup` | Manually create/reset the SQLite database |
 | `pytest -m smoke` | Smoke tests |
+| `pytest -m "database and smoke"` | Database smoke tests |
 | `pytest -m "api and auth"` | API auth tests |
 | `pytest -m "api and performance"` | API performance tests |
 | `pytest -m login` | UI login tests |
@@ -560,19 +685,20 @@ cp .env.example .env            # Edit with your credentials
 | Marker | Type | Scope | Test Count |
 |--------|------|-------|-----------|
 | `smoke` | 🟢 Critical | Core functionality sanity checks | 7 |
-| `regression` | 🔵 Full | Comprehensive functional coverage | 20 |
+| `regression` | 🔵 Full | Comprehensive functional coverage | 265 |
 | `api` | 🌐 Layer | All API/integration tests | 22* |
-| `login` | 🔐 Feature | Login & authentication (UI) | 3 |
-| `cart` | 🛒 Feature | Shopping cart (UI + API) | 6 |
-| `checkout` | 💳 Feature | Checkout workflow (UI + API) | 5 |
-| `inventory` | 📦 Feature | Product catalogue (UI + API) | 10 |
+| `login` | 🔐 Feature | Login & authentication (UI + DB) | 17 |
+| `cart` | 🛒 Feature | Shopping cart (UI + API + DB) | 20 |
+| `checkout` | 💳 Feature | Checkout workflow (UI + API + DB) | 19 |
+| `inventory` | 📦 Feature | Product catalogue (UI + API + DB) | 24 |
+| `products` | 📋 Feature | API + DB product catalogue tests | 18 |
+| `orders` | 📄 Feature | API + DB order management tests | 16 |
 | `auth` | 🔑 Feature | API authentication tests | 3 |
-| `products` | 📋 Feature | API product catalogue tests | 4 |
-| `orders` | 📄 Feature | API order management tests | 2 |
-| `users` | 👤 Feature | API user profile tests | 2 |
+| `users` | 👤 Feature | API + DB user profile tests | 16 |
 | `negative` | ❌ Quality | API error-path tests | 4 |
 | `schema` | 📐 Quality | API JSON Schema validation | 7 |
 | `performance` | ⏱️ Quality | API response time validation | 5 |
+| `database` | 🗄️ Layer | All database-level integration tests | 245 |
 
 *\*8 of 30 API tests gracefully skip when endpoints are unavailable on the target API.*
 
@@ -597,8 +723,9 @@ cp .env.example .env            # Edit with your credentials
 | `--app-base-url` | `https://www.saucedemo.com/` | UI application URL |
 | `--report-run-id` | Auto-timestamp | Custom report folder name |
 | `--report-retention-days` | `30` | Report cleanup threshold |
-| `--suite` | `ui` | Test suite: `ui`, `api`, `all` |
+| `--suite` | `ui` | Test suite: `ui`, `api`, `db`, `all` |
 | `--api-base-url` | `https://api.escuelajs.co/api/v1` | API base URL |
+| `--db-reset` | `False` | Reset the SQLite database before running DB tests |
 | `--workers` | `1` | xdist worker count |
 
 ---
@@ -680,6 +807,17 @@ All browsers run at **1440×1000** viewport with configurable implicit wait.
 
 ## 📊 Current Test Coverage
 
+### Overall Summary
+
+| Layer | Total Tests | Passing | Failed | Skipped |
+|-------|-------------|---------|--------|---------|
+| 🧪 **UI Tests** | 12 | 12 | 0 | 0 |
+| 🔌 **API Tests** | 30 | 22 | 0 | 8* |
+| 🗄️ **Database Tests** | 245 | 245 | 0 | 0 |
+| **Total** | **287** | **279** | **0** | **8** |
+
+*\*8 API tests skip gracefully when cart/order endpoints are unavailable on the default Platzi Fake Store API.*
+
 ### UI Tests (12 total)
 
 | Test File | Tests | Status |
@@ -704,19 +842,46 @@ All browsers run at **1440×1000** viewport with configurable implicit wait.
 
 *\*Skipped tests target cart/order endpoints unavailable on the default Platzi Fake Store API. They activate when pointed at a full-featured ecommerce backend.*
 
+### Database Tests (245 total)
+
+| Module | File | Tests | Status |
+|--------|------|-------|--------|
+| Login | `test_login_db.py` | 14 | ✅ All Passing |
+| Products | `test_products_db.py` | 14 | ✅ All Passing |
+| Inventory | `test_inventory_db.py` | 14 | ✅ All Passing |
+| Cart | `test_cart_db.py` | 14 | ✅ All Passing |
+| Checkout | `test_checkout_db.py` | 14 | ✅ All Passing |
+| Orders | `test_orders_db.py` | 14 | ✅ All Passing |
+| Order Items | `test_order_items_db.py` | 14 | ✅ All Passing |
+| Users | `test_users_db.py` | 14 | ✅ All Passing |
+| Payments | `test_payments_db.py` | 14 | ✅ All Passing |
+| Search | `test_search_db.py` | 14 | ✅ All Passing |
+| Sorting | `test_sorting_db.py` | 14 | ✅ All Passing |
+| Sessions | `test_sessions_db.py` | 14 | ✅ All Passing |
+| Coupons | `test_coupons_db.py` | 14 | ✅ All Passing |
+| Reviews | `test_reviews_db.py` | 14 | ✅ All Passing |
+| Wishlist | `test_wishlist_db.py` | 14 | ✅ All Passing |
+| **Total** | **15 modules** | **245** | ✅ **All Passing** |
+
 ### Validation Matrix
 
-| Validation Type | UI Tests | API Tests |
-|-----------------|----------|-----------|
-| HTTP Status Code | — | ✅ 7 assertion methods |
-| JSON Response | — | ✅ Key presence, types, values |
-| JSON Schema | — | ✅ 7 schemas validated |
-| Response Time | — | ✅ < 2 seconds SLA |
-| Page Loaded | ✅ `is_loaded()` | — |
-| Element Visibility | ✅ `is_visible()` | — |
-| Text Content | ✅ `get_text()` | — |
-| Error Messages | ✅ Form validation | ✅ `assert_error_message_contains()` |
-| Business Rules | ✅ Cart count, sort | ✅ Positive ID, pagination |
+| Validation Type | UI Tests | API Tests | Database Tests |
+|-----------------|----------|-----------|----------------|
+| HTTP Status Code | — | ✅ 7 assertion methods | — |
+| JSON Response | — | ✅ Key presence, types, values | — |
+| JSON Schema | — | ✅ 7 schemas validated | — |
+| Response Time | — | ✅ < 2 seconds SLA | — |
+| Page Loaded | ✅ `is_loaded()` | — | — |
+| Element Visibility | ✅ `is_visible()` | — | — |
+| Text Content | ✅ `get_text()` | — | — |
+| Error Messages | ✅ Form validation | ✅ `assert_error_message_contains()` | — |
+| Business Rules | ✅ Cart count, sort | ✅ Positive ID, pagination | ✅ 15 modules validated |
+| Data Integrity | — | — | ✅ FK constraints, uniqueness, null checks |
+| Pricing Accuracy | — | — | ✅ Product prices, order totals, discounts |
+| Stock Validation | — | — | ✅ Inventory levels, reorder thresholds |
+| User Account States | — | — | ✅ Active/locked, roles, login attempts |
+| Order Lifecycle | — | — | ✅ Status transitions, payment linkage |
+| Coupon Logic | — | — | ✅ Discounts, expiry, usage limits |
 
 ---
 
@@ -794,7 +959,31 @@ class TestNewResourceAPI:
         APIAssertions.assert_status_created(response)
 ```
 
-**To extend utilities:** Add static methods to `APIAssertions` / `APIHelpers`, create dataclasses in `models/`, add JSON schemas to `schemas/`.
+### Adding New Database Tests
+
+```python
+from typing import Any
+
+from database.db_helpers import DBHelpers
+from database.db_queries import fetch_all
+from database.sql_constants import SQLQueries
+
+# 1. Add SQL query in sql_constants.py
+class SQLQueries(str, Enum):
+    PRODUCT_STOCK_STATUS = "SELECT p.name, i.quantity FROM products p JOIN inventory i ..."
+
+# 2. Add helper method in db_helpers.py
+@staticmethod
+def products_with_stock_above(min_qty: int) -> list[dict[str, Any]]:
+    return fetch_all(SQLQueries.PRODUCT_STOCK_STATUS, (min_qty,))
+
+# 3. Write test in the appropriate module
+def test_verify_products_with_high_stock(self, db_helpers: DBHelpers) -> None:
+    results = db_helpers.products_with_stock_above(50)
+    assert len(results) >= 1
+```
+
+**To extend utilities:** Add static methods to `APIAssertions` / `APIHelpers`, create dataclasses in `models/`, add JSON schemas to `schemas/`. For DB tests, add queries to `sql_constants.py`, helpers to `db_helpers.py`, and tests to the appropriate `test_*_db.py` file.
 
 ---
 
@@ -809,7 +998,7 @@ class TestNewResourceAPI:
 | **Test Data Factories** | Medium | Programmatic data generation with factory_boy |
 | **Slack/Teams Notifications** | Low | Pipeline notifications with report links |
 | **Performance Benchmarking** | Low | Track response times across builds |
-| **Database Validation** | Medium | Direct DB assertions for data integrity |
+| ~~Database Validation~~ | ✅ **Done** | 245 DB tests across 15 modules |
 | **Load Testing Integration** | Low | k6 or Locust scripts for endpoint load validation |
 
 ---

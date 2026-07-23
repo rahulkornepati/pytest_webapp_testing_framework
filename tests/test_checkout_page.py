@@ -8,6 +8,7 @@ from pages.header_page import HeaderPage
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 from pages.menu_page import MenuPage
+from pages.product_data import ProductData
 
 class TestCheckoutPage:
 
@@ -17,7 +18,7 @@ class TestCheckoutPage:
         header_page = HeaderPage(logged_in_driver)
         customer = checkout_customers["valid_customer"]
 
-        inventory_page.add_backpack_to_cart()
+        inventory_page.add_product_to_cart(ProductData.BACKPACK)
         header_page.open_cart()
         CartPage(logged_in_driver).checkout()
 
@@ -41,7 +42,7 @@ class TestCheckoutPage:
         header_page = HeaderPage(logged_in_driver)
         customer = checkout_customers["missing_first_name"]
 
-        inventory_page.add_backpack_to_cart()
+        inventory_page.add_product_to_cart(ProductData.BACKPACK)
         header_page.open_cart()
         CartPage(logged_in_driver).checkout()
 
