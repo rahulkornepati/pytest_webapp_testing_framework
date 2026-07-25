@@ -620,20 +620,6 @@ Python's `logging` module with dual-handler setup (file + console):
 
 ---
 
-## 🖼️ Screenshots
-
-> *Placeholder images — replace with actual captures from a test run.*
-
-| Execution Report | Failure Screenshot |
-|:---:|:---:|
-| ![HTML Report](https://via.placeholder.com/600x400/1a1a2e/e94560?text=HTML+Execution+Report) | ![Failure Screenshot](https://via.placeholder.com/400x300/533483/ffffff?text=Failure+Screenshot) |
-
-| CI Pipeline | Folder Structure |
-|:---:|:---:|
-| ![CI Pipeline](https://via.placeholder.com/600x300/0f3460/e0e0e0?text=CI+Pipeline+Overview) | ![Folder Structure](https://via.placeholder.com/400x500/16213e/00ff88?text=Project+Structure) |
-
----
-
 ## 💻 Installation
 
 ```bash
