@@ -1027,6 +1027,6 @@ IMPLIED.
 
 *If you find this framework useful, please ⭐ star the repository!*
 
-[![Back to Top](https://img.shields.io/badge/⬆_Back_to_Top-8A2BE2)](#-selenium--pytest-enterprise-automation-framework)
+[![Back to Top](https://img.shields.io/badge/⬆_Back_to_Top-8A2BE2)](#-selenium_pytest_webapp_testing_framework)
 
 </div>
